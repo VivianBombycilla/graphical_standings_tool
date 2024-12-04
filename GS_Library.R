@@ -42,6 +42,7 @@ plot_image_GS <- function(
     max_Y = NA,
     
     file_output_name,
+    save_settings_path = NA,
     png_width = 2560,
     png_height = 1440
 ) {
@@ -175,6 +176,24 @@ plot_image_GS <- function(
     height = png_height,
     units = "px"
   )
+  if (!is.na(save_settings_path)) {
+    settings_file <- file(save_settings_path)
+    writeLines(c(
+      paste0("filter_by <- ",filter_by),
+      paste0("filter_key <- ",filter_key),
+      paste0("label_adjust_x_mult <- ",label_adjust_x_mult),
+      paste0("label_adjust_y_mult <- ",label_adjust_y_mult),
+      paste0("label_shared_offset_x <- ",label_shared_offset_x),
+      paste0("label_logo_size <- ",label_logo_size),
+      paste0("segment_base_linewidth <- ",segment_base_linewidth),
+      paste0("segment_target_height <- ",segment_target_height),
+      paste0("dot_size <- ",dot_size),
+      paste0("max_X <- ",max_X),
+      paste0("max_Y <- ",max_Y)
+      ),
+      settings_file)
+    close(settings_file)
+  }
 }
 
 save_last_graphical_standings <- function(name) {
